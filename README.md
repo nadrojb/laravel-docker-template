@@ -4,7 +4,7 @@
 
 #### 2. Create the Laravel project:
 ```bash
-docker-compose run --rm composer create-project laravel/laravel
+docker-compose run --rm composer create-project laravel/nameOfProject .
 ```
 
 #### 3. Build and run containers:
