@@ -1,7 +1,7 @@
-Clone this repo to build a new Laravel project inside a Docker container.
+Scaffold a new Laravel project inside a Docker container.
 
-## CMD to create new laravel project 
+## Clone repo, cd laravel-docker-template and run
 docker-compose run --rm composer create-project laravel/nameOfProject .
 
-## CMD to build and run container
+## Build and run container
 docker-compose up --build 
