@@ -3,67 +3,40 @@ services:
     build:
       context: .
       dockerfile: nginx.dockerfile
-      args:
-        - PROJECT_NAME=${PROJECT_NAME:-laravel}
     ports:
       - 80:80
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
     depends_on:
       - mysql
       - php
-    environment:
-      - PROJECT_NAME=${PROJECT_NAME:-laravel}
 
   mysql:
     image: mysql:8.0
     environment:
-      MYSQL_DATABASE: ${PROJECT_NAME:-laravel}
-      MYSQL_USER: ${PROJECT_NAME:-laravel}
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
     ports:
       - "3306:3306"
     volumes:
       - db-data:/var/lib/mysql
+
   php:
     build:
       context: .
       dockerfile: php.dockerfile
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
 
   composer:
     build:
       context: .
       dockerfile: composer.dockerfile
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
     working_dir: /var/www/html
-    environment:
-      - PROJECT_NAME=${PROJECT_NAME:-laravel}
-
-  npm:
-    image: node:current-alpine
-    working_dir: /var/www/html/${PROJECT_NAME:-laravel}
-    volumes:
-      - ./src:/var/www/html
-    entrypoint: ['npm']
-    environment:
-      - PROJECT_NAME=${PROJECT_NAME:-laravel}
-
-  artisan:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html/${PROJECT_NAME:-laravel}
-    depends_on:
-      - mysql
-    entrypoint: ['php', '/var/www/html/${PROJECT_NAME:-laravel}/artisan']
-    environment:
-      - PROJECT_NAME=${PROJECT_NAME:-laravel}
 
 volumes:
   db-data:
