@@ -35,11 +35,11 @@ services:
       dockerfile: composer.dockerfile
     volumes:
       - ./src:/var/www/html
-    working_dir: /var/www/html
+    working_dir: /var/www/html/laravel
 
   npm:
     image: node:current-alpine
-    working_dir: /var/www/html
+    working_dir: /var/www/html/laravel
     volumes:
       - ./src:/var/www/html
     entrypoint: ['npm']
@@ -50,10 +50,10 @@ services:
       dockerfile: php.dockerfile
     volumes:
       - ./src:/var/www/html
-    working_dir: /var/www/html
+    working_dir: /var/www/html/laravel
     depends_on:
       - mysql
-    entrypoint: ['php', '/var/www/html/artisan']
+    entrypoint: ['php', '/var/www/html/laravel/artisan']
 
 volumes:
   db-data:
